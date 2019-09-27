@@ -29,11 +29,13 @@ sudo apt-get update
 sudo apt-get install python3-pip
 sudo apt install python3-venv
 pip3 install flask
-pip install Flask-RESTful
+pip3 install Flask-RESTful
+pip3 install typing
 ```
 
-Create the project directory
+Create the python virtual environment:
 ```
+virtualenv --python=python3 
 sudo apt-get update
 sudo apt-get install python3-pip
 sudo apt install python3-venv
