@@ -6,7 +6,7 @@
 
 from flask import Flask, request, jsonify
 from flask_restful import Resource, Api
-from typing import List
+from typing import List, Dict
 from flask_cors import CORS
 import flask_cors
 import lizardspock
@@ -34,15 +34,15 @@ class Choices(Resource):
 
 class Choice(Resource):
 
-    def get(self) -> dict:
+    def get(self) -> Dict:
         return lizardspock.get_random_choice()
 
 
 class Play(Resource):
 
-    #@app.route("/api/v1/users/create", methods=['POST'])
-    #@app.route("/play", methods=['POST'])
-    def post(self) -> List:
+    player: int
+
+    def __init__(self) -> None:
         # request.headders.add()
         # request.headers.add('Access-Control-Allow-Origin', '*')
         # request.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
@@ -63,12 +63,32 @@ class Play(Resource):
 
         #form = list(request.form.to_dict())[0]
         #player = json.loads(list(jsonify(request.form).json)[0])['player']
-        computer = lizardspock.get_random_choice()['id']
+        #pass
 
-        data = request.form.to_dict()
-        player = json.loads(list(data)[0])['player']
+        #content_types = dict
 
-        result = lizardspock.play(player, computer)
+        json_data = request.get_json(force=True)
+        print("json_data: {json_data}")
+        self.player = json_data['player']
+
+        # if request.content_type == 'application/x-www-form-urlencoded; charset=UTF-8':
+        #     print('form')
+        # elif request.content_type == 'application/json':
+        #     print('json')
+        #
+        # if request.headers['CONTENT-TYPE'] == 'application/x-www-form-urlencoded; charset=UTF-8':
+        #     content_types['application/x-www-form-urlencoded; charset=UTF-8'] = json.loads(list(data)[0])['player']
+
+        # data = request.form.to_dict()
+        # self.player = json.loads(list(data)[0])['player']
+
+    # def process_request_fields(self) -> None:
+
+    def post(self) -> List:
+        # data = request.form.to_dict()
+        # self.player = json.loads(list(data)[0])['player']
+
+        result = lizardspock.play(self.player)
         return result
 
     # #@app.route("/api/v1/users/create", methods=['POST'])
@@ -86,16 +106,12 @@ class Play(Resource):
     #     result = lizardspock.play(player, computer)
     #     return result
 
-
-
 api.add_resource(Choices, '/choices')
 api.add_resource(Choice, '/choice')
 api.add_resource(Play, '/play')
 
-
 @app.after_request
 def after_request(response):
-
     response.headers.add('Access-Control-Allow-Origin', '*')
     response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
     response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')

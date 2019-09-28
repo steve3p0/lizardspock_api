@@ -25,6 +25,10 @@ def get_random_choice() -> Dict:
 
 
 def validate_choice(choice_id: int) -> None:
+    """
+
+    :rtype: object
+    """
     if not isinstance(choice_id, int):
         raise TypeError(f"Invalid choice type. Expected 'int' got '{type(choice_id)}' instead.")
 
@@ -35,8 +39,12 @@ def validate_choice(choice_id: int) -> None:
         raise IndexError(f"{choice_id} is an invalid choice id. Expecting 'int' between {lower} and {upper}.")
 
 
-def play(player: int, computer: int) -> Dict:
+def play(player: int, computer: int = get_random_choice()['id']) -> Dict:
+    """
 
+    :param player: 
+    :type computer: object
+    """
     # Validate player and computer are existing choices
     validate_choice(player)
     validate_choice(computer)
@@ -51,25 +59,4 @@ def play(player: int, computer: int) -> Dict:
         result = results.lose
 
     res = {'results': result, 'player': player, 'computer': computer}
-    return res
-
-def play1(player: int, computer: int) -> Dict:
-
-    # Validate player and computer are existing choices
-    validate_choice(player)
-    validate_choice(computer)
-
-    player -= 1
-    computer -= 1
-
-    if (computer + 1) % 5 == player:
-        result = results.win
-    elif (computer + 2) % 5 == player:
-        result = results.win
-    elif computer == player:
-        result = results.tie
-    else:
-        result = results.lose
-
-    res = {'results': result, 'player': player + 1, 'computer': computer + 1}
     return res
