@@ -10,7 +10,6 @@ import json
 from app import app
 import lizardspock
 
-
 # Integration Tests
 class TestApp(TestCase):
 

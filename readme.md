@@ -16,6 +16,7 @@ What things you need to install the software and how to install them
 * nose (python unit and integration testing)
 * Flask (web api)
 * Flask-RESTful (web api rest library)
+* Flask-CORS (enables Cross Origin Resource Sharing)
 * Typing (for type hints)
 
 IDE:
@@ -33,8 +34,10 @@ $ sudo apt install python3-venv
 $ pip3 install nose
 $ pip3 install flask
 $ pip3 install Flask-RESTful
+$ pip3 install -U flask-cors
 $ pip3 install typing
 ```
+
 Navigate to where you want to create the project directory and virtual environment:
 Create the project folder and virtual environment:
 ```

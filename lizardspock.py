@@ -18,7 +18,7 @@ choices = [{'id': 1, 'name': 'rock'},
 
 
 def get_random_choice() -> Dict:
-    upper = len(choices)
+    upper = len(choices) + 1
     random_c = random.randrange(1, upper)
     choice = [c for c in choices if c['id'] == random_c][0]
     return choice
