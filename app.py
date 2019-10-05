@@ -12,55 +12,53 @@ from json import JSONDecodeError
 import lizardspock
 import lizardspock_exceptions
 
-#for debugging
-import sys
-from pprint import pprint
-
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 api = Api(app)
 
 
 class Choices(Resource):
+    """ Encapsulates an abstract RESTful resource for getting the list of choices """
 
     def get(self) -> List:
+        """ HTTP GET call that retrieves a list of available choices for the game
+        :return: Dict[result] (example { 'results': 'win', 'player': 1, computer: 5 }
+        """
         return lizardspock.choices
 
 
 class Choice(Resource):
+    """ Encapsulates an abstract RESTful resource for getting a random choice """
 
     def get(self) -> Dict:
+        """ HTTP GET call that gets a random choice for the game
+        :return: Dict[choice], example { 'id': 2, 'name': 'spock' }
+        """
         return lizardspock.get_random_choice()
 
 
 class Play(Resource):
+    """ Encapsulates an abstract RESTful resource for POSTing a play (round) of the game """
+
     player: int
 
     def __init__(self) -> None:
-        # json_data = request.get_json(force=True)
-        # self.player = json_data['player']
-        print('Hello world!', file=sys.stderr)
-        print(request.headers, file=sys.stderr)
-        pprint(request.headers, stream=sys.stderr)
-
-        json_data = request.get_json(force=True)
-        self.player = json_data['player']
-
-
-        # try:
-        #     json_data = request.get_json(force=True)
-        #     self.player = json_data['player']
-        # except TypeError as err:
-        #     raise lizardspock_exceptions.InvalidUsage(err.message, 400, request.get_data())
-        # except JSONDecodeError as err:
-        #     raise lizardspock_exceptions.InvalidUsage(err.message, 400, request.get_data())
-        # except Exception as err:
-        #     raise lizardspock_exceptions.InvalidUsage(err.message, 400, request.get_data())
+        """ Constructor for Play class that sets up an HTTP POST """
+        try:
+            json_data = request.get_json(force=True)
+            self.player = json_data['player']
+        except TypeError as err:
+            raise lizardspock_exceptions.InvalidUsage(err.message, 400, request.get_data())
+        except JSONDecodeError as err:
+            raise lizardspock_exceptions.InvalidUsage(err.message, 400, request.get_data())
+        except Exception as err:
+            raise lizardspock_exceptions.InvalidUsage(err.message, 400, request.get_data())
 
     def post(self) -> Dict:
-        # example {'results': 'win', 'player': 1, 'computer': 3}
-        # result = lizardspock.play(self.player)
-        # return result
+        """ HTTP POST call that plays a game
+        :return: Dict[result] (example { 'results': 'win', 'player': 1, computer: 5 }
+        :rtype: Union[Dict[str, str], None]
+        """
 
         try:
             result = lizardspock.play(self.player)

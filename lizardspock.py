@@ -18,20 +18,18 @@ choices = [{'id': 1, 'name': 'rock'},
 
 
 def get_random_choice() -> Dict:
+    """ Gets a random choice from the choices array of dict objects
+    :return: Dict[choice], example { 'id': 2, 'name': 'spock' }
+    """
     return random.choice(choices)
 
 
-# def get_random_choice() -> Dict:
-#     upper = len(choices)
-#     random_c = random.randrange(1, upper)
-#     choice = [c for c in choices if c['id'] == random_c][0]
-#     return choice
-
-
 def validate_choice(choice_id: int) -> None:
-    """
-
-    :rtype: object
+    """ Validates that a move choice an int and within the range of acceptable values
+    :param choice_id:
+    :type choice_id: int
+    :return:
+    :rtype: None
     """
     if not isinstance(choice_id, int):
         raise TypeError(f"Invalid choice type. Expected 'int' got '{type(choice_id)}' instead.")
@@ -42,16 +40,15 @@ def validate_choice(choice_id: int) -> None:
     if not lower <= choice_id <= upper:
         raise IndexError(f"{choice_id} is an invalid choice id. Expecting 'int' between {lower} and {upper}.")
 
-#def play(player: int, computer: int = get_random_choice()['id']) -> Dict:
-#def play(player: int, computer: int = get_random_choice()) -> Dict:
-#def play(player: int, computer: int = get_random_choice()) -> Dict:
+
 def play(player: int, computer: int = None) -> Dict:
-
+    """ Decides who wins a round of rock paper scissors
+    :param player:      The player choice id
+    :param computer:    The computer choice id
+    :return:            Dict[result] (example { 'results': 'win', 'player': 1, computer: 5 }
     """
 
-    :param player: 
-    :type computer: object
-    """
+    # If the computer choice has been passed already
     if computer is None:
         computer: int = get_random_choice()['id']
 
