@@ -18,10 +18,14 @@ choices = [{'id': 1, 'name': 'rock'},
 
 
 def get_random_choice() -> Dict:
-    upper = len(choices) + 1
-    random_c = random.randrange(1, upper)
-    choice = [c for c in choices if c['id'] == random_c][0]
-    return choice
+    return random.choice(choices)
+
+
+# def get_random_choice() -> Dict:
+#     upper = len(choices)
+#     random_c = random.randrange(1, upper)
+#     choice = [c for c in choices if c['id'] == random_c][0]
+#     return choice
 
 
 def validate_choice(choice_id: int) -> None:
@@ -38,13 +42,19 @@ def validate_choice(choice_id: int) -> None:
     if not lower <= choice_id <= upper:
         raise IndexError(f"{choice_id} is an invalid choice id. Expecting 'int' between {lower} and {upper}.")
 
+#def play(player: int, computer: int = get_random_choice()['id']) -> Dict:
+#def play(player: int, computer: int = get_random_choice()) -> Dict:
+#def play(player: int, computer: int = get_random_choice()) -> Dict:
+def play(player: int, computer: int = None) -> Dict:
 
-def play(player: int, computer: int = get_random_choice()['id']) -> Dict:
     """
 
     :param player: 
     :type computer: object
     """
+    if computer is None:
+        computer: int = get_random_choice()['id']
+
     # Validate player and computer are existing choices
     validate_choice(player)
     validate_choice(computer)

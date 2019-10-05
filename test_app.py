@@ -6,9 +6,10 @@
 #   https://flask.palletsprojects.com/en/1.0.x/testing/
 
 from unittest import TestCase
-import json
 from app import app
+import json
 import lizardspock
+
 
 # Integration Tests
 class TestApp(TestCase):
@@ -100,8 +101,9 @@ class TestApp(TestCase):
 
         expect_status_code = 400    # BAD REQUEST
 
-        actual_response = self.client.post(input_url, data=input_data, content_type=self.input_content_type)
-        self.assertEqual(actual_response.status_code, expect_status_code)
+        with self.assertRaises(TypeError):
+            actual_response = self.client.post(input_url, data=input_data, content_type=self.input_content_type)
+            self.assertEqual(actual_response.status_code, expect_status_code)
 
         # Type Hint: <class 'dict'>: {'results': 'win', 'player': 1, 'computer': 4}
         actual_play = json.loads(actual_response.data)

@@ -1,5 +1,6 @@
 from flask import jsonify
 
+
 class InvalidUsage(Exception):
     status_code = 400
 
@@ -14,6 +15,7 @@ class InvalidUsage(Exception):
         rv = dict(self.payload or ())
         rv['message'] = self.message
         return rv
+
 
 class InvalidParameterType(Exception):
     status_code = 400

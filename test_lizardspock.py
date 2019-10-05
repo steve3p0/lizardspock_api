@@ -1,6 +1,6 @@
 # Rock Paper Scissors Lizard Spock
 # By Steve Braich
-
+from typing import Dict, Union
 from unittest import TestCase
 from lizardspock import results, choices
 import lizardspock
