@@ -1,0 +1,329 @@
+{
+	"info": {
+		"_postman_id": "de904d57-1c41-4e87-8074-f59620c9ae49",
+		"name": "LizardSpock",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Choices (get) - showing multiple choices",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e4c26dc2-280e-410a-9c92-ab00203ba8bb",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/choices",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"choices"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Choice (get)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/choice",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"choice"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Play (post) request.form",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "495e03c7-fbe1-47a6-8caa-ac6b5575652c",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+							"",
+							"var expect_results = [\"win\", \"lose\", \"draw\"];",
+							"var expect_player = [1, 2, 3, 4, 5]",
+							"",
+							"",
+							"pm.test(\"results is win, lose, or draw\", function () ",
+							"{ ",
+							"    var data = pm.response.json();",
+							"",
+							"    pm.expect(data.results).to.be.oneOf(expect_results);",
+							"    ",
+							"});",
+							"",
+							"pm.test(\"player is in range of expected values\", function () ",
+							"{ ",
+							"    var data = pm.response.json();",
+							"    pm.expect(data.player).to.be.oneOf(expect_player);",
+							"    ",
+							"});",
+							"",
+							"pm.test(\"computer is in range of expected values\", function () ",
+							"{ ",
+							"    var data = pm.response.json();",
+							"    pm.expect(data.computer).to.be.oneOf(expect_player);",
+							"    ",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Referer",
+						"value": "postman - Lizard Spock Integration Test: Post Play"
+					},
+					{
+						"key": "Origin",
+						"value": "postman"
+					},
+					{
+						"key": "User-Agent",
+						"value": "PostmanRuntime/7.17.1"
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"value": "cors"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded; charset=UTF-8"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"player\":4}"
+				},
+				"url": {
+					"raw": "{{url}}/play",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"play"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Play (post) request.form - wrong type",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "614fc51d-836c-4ec1-afaf-c053a1215969",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"player\": 'XXX'\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/play",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"play"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Play (post) request.form - out of range",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "614fc51d-836c-4ec1-afaf-c053a1215969",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"player\": 999\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/play",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"play"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Play (post) request.json",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "614fc51d-836c-4ec1-afaf-c053a1215969",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+							"",
+							"var expect_results = [\"win\", \"lose\", \"draw\"];",
+							"var expect_player = [1, 2, 3, 4, 5]",
+							"",
+							"",
+							"pm.test(\"results is win, lose, or draw\", function () ",
+							"{ ",
+							"    var data = pm.response.json();",
+							"",
+							"    pm.expect(data.results).to.be.oneOf(expect_results);",
+							"    ",
+							"});",
+							"",
+							"pm.test(\"player is in range of expected values\", function () ",
+							"{ ",
+							"    var data = pm.response.json();",
+							"    pm.expect(data.player).to.be.oneOf(expect_player);",
+							"    ",
+							"});",
+							"",
+							"pm.test(\"computer is in range of expected values\", function () ",
+							"{ ",
+							"    var data = pm.response.json();",
+							"    pm.expect(data.computer).to.be.oneOf(expect_player);",
+							"    ",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"player\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/play",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"play"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "0a94a515-5a9d-4ef4-8dfe-e7a3c08e1c26",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "847e52bf-0027-421d-a284-56db5cb0cd6c",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
